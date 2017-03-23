@@ -1,15 +1,18 @@
 package com.lhh.webpackage.bbs.web;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.lhh.core.util.LhhCoreUtilsCtrl;
+import com.lhh.webpackage.bbs.service.TestService;
 
 /**
  * 测试
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("test")
 public class TestWeb {
 	
+	@Resource private TestService testService;
 	
 	/**
 	 * 测试
@@ -32,19 +36,7 @@ public class TestWeb {
 		Map<String,Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("success", true);
 		resultMap.put("msg", "操作成功");
-		writeStr2Res(resultMap.toString(), res);
+		LhhCoreUtilsCtrl.putMapToJson(resultMap, res);
 	}
 	
-	
-
-    private void writeStr2Res(String jsonStr, HttpServletResponse res) {
-        res.setContentType("text/html");
-        res.setContentType("text/html; charset=UTF-8");
-        try {
-            res.getWriter().write(jsonStr);  
-        } catch (IOException ex) {
-            throw new IllegalArgumentException(ex.getMessage());
-        }
-    }
-    
 }
